@@ -1,0 +1,39 @@
+# Maven / Gradle build files
+/target/
+/build/
+
+# IDE files
+/.idea/
+/*.iml
+*.classpath
+*.project
+*.settings/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment files
+.env
+
+# Spring Boot specific
+*.jar
+*.war
+
+# Test reports
+/test-output/
+/surefire-reports/
+/jacoco.exec
+
+# Node modules (if using frontend)
+/node_modules/
+
+# Docker
+*.pid
+
+# Others
+*.swp
+*.swo
