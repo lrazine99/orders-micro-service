@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-@Table(name = "Order")
+@Table(name = "orders")
 @Entity
 public class OrderModel {
     @Id

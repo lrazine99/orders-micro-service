@@ -15,4 +15,8 @@ public class OrderDao {
     public List<OrderModel> findAll() {
         return productRepository.findAll();
     }
+
+    public List<OrderModel> findByUserId(int userId) {
+        return productRepository.findByUserId(userId);
+    }
 }

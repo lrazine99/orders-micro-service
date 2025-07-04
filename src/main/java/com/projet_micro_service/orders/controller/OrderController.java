@@ -32,6 +32,11 @@ public class OrderController {
         return "{\"message\":\"Hello World bonjour " + id + "\", \"status\":200}";
     }
 
+    @GetMapping("/orders/client/{clientId}")
+    public List<OrderModel> getOrdersByClientId(@PathVariable int clientId) {
+        return orderDao.findByUserId(clientId);
+    }
+
     @DeleteMapping("/orders/{id}")
     public String deleteOrder(@PathVariable int id) {
         // Here you would typically call a service to delete the order by id
