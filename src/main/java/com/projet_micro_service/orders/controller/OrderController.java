@@ -17,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.projet_micro_service.orders.dao.OrderDao;
 import com.projet_micro_service.orders.model.OrderModel;
+import com.projet_micro_service.orders.service.OrderProducer;
 
 @RestController
 public class OrderController {
@@ -26,6 +27,9 @@ public class OrderController {
     
     @Autowired
     private final RestTemplate restTemplate;
+    
+    @Autowired
+    private OrderProducer orderProducer;
 
     public OrderController(OrderDao orderDao, RestTemplate restTemplate) {
         this.orderDao = orderDao;
@@ -86,6 +90,10 @@ public class OrderController {
         }
         
         OrderModel savedOrder = orderDao.save(order);
+        
+        // Publish order created event
+        orderProducer.publishOrderCreated(savedOrder);
+        
         return ResponseEntity.status(HttpStatus.CREATED).body(savedOrder);
     }
 
