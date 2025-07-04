@@ -1,5 +1,9 @@
 package com.projet_micro_service.orders.model;
 
+import java.util.List;
+import java.util.Map;
+
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,15 +19,23 @@ public class OrderModel {
     private String details;
     private int totalPrice;
     private int userId;
+    
+    @ElementCollection
+    private List<Integer> productIds;
+    
+    @ElementCollection
+    private Map<Integer, Integer> productQuantities;
 
     public OrderModel() {
     }
 
-    public OrderModel(int id, String details, int totalPrice, int userId) {
+    public OrderModel(int id, String details, int totalPrice, int userId, List<Integer> productIds, Map<Integer, Integer> productQuantities) {
         this.id = id;
         this.details = details;
         this.totalPrice = totalPrice;
         this.userId = userId;
+        this.productIds = productIds;
+        this.productQuantities = productQuantities;
     }
 
     public int getId() {
@@ -56,5 +68,21 @@ public class OrderModel {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public List<Integer> getProductIds() {
+        return this.productIds;
+    }
+
+    public void setProductIds(List<Integer> productIds) {
+        this.productIds = productIds;
+    }
+
+    public Map<Integer, Integer> getProductQuantities() {
+        return this.productQuantities;
+    }
+
+    public void setProductQuantities(Map<Integer, Integer> productQuantities) {
+        this.productQuantities = productQuantities;
     }
 }
