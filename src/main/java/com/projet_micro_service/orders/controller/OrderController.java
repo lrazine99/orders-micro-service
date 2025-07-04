@@ -3,9 +3,14 @@ package com.projet_micro_service.orders.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.projet_micro_service.orders.dao.OrderDao;
@@ -28,8 +33,29 @@ public class OrderController {
     }
 
     @GetMapping("/orders/{id}")
-    public String getOrderById(@PathVariable int id) {
-        return "{\"message\":\"Hello World bonjour " + id + "\", \"status\":200}";
+    public ResponseEntity<OrderModel> getOrderById(@PathVariable int id) {
+        OrderModel order = orderDao.findById(id);
+        if (order != null) {
+            return ResponseEntity.ok(order);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/orders")
+    public ResponseEntity<OrderModel> createOrder(@RequestBody OrderModel order) {
+        OrderModel savedOrder = orderDao.save(order);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedOrder);
+    }
+
+    @PutMapping("/orders/{id}")
+    public ResponseEntity<OrderModel> updateOrder(@PathVariable int id, @RequestBody OrderModel order) {
+        if (!orderDao.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+        order.setId(id);
+        OrderModel updatedOrder = orderDao.save(order);
+        return ResponseEntity.ok(updatedOrder);
     }
 
     @GetMapping("/orders/client/{clientId}")
@@ -38,13 +64,11 @@ public class OrderController {
     }
 
     @DeleteMapping("/orders/{id}")
-    public String deleteOrder(@PathVariable int id) {
-        // Here you would typically call a service to delete the order by id
-        return "{\"message\":\"Order with id " + id + " deleted\", \"status\":200}";
+    public ResponseEntity<String> deleteOrder(@PathVariable int id) {
+        if (!orderDao.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+        orderDao.deleteById(id);
+        return ResponseEntity.ok("{\"message\":\"Order with id " + id + " deleted\", \"status\":200}");
     }
-
-    // @PostMapping("/orders")
-    // public OrderModel createOrder(@RequestBody OrderModel order) {
-    // return orderService.createOrder(order);
-    // }
 }

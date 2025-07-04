@@ -16,7 +16,14 @@ public class OrderModel {
     private int totalPrice;
     private int userId;
 
-    public void ProductModel() {
+    public OrderModel() {
+    }
+
+    public OrderModel(int id, String details, int totalPrice, int userId) {
+        this.id = id;
+        this.details = details;
+        this.totalPrice = totalPrice;
+        this.userId = userId;
     }
 
     public int getId() {
@@ -27,11 +34,11 @@ public class OrderModel {
         this.id = id;
     }
 
-    public String setDetails() {
+    public String getDetails() {
         return this.details;
     }
 
-    public void getDetails(String details) {
+    public void setDetails(String details) {
         this.details = details;
     }
 
