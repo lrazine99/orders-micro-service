@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "order.queue",
+    "type": "java.lang.String",
+    "description": "A description for 'order.queue'"
+  },
+  {
+    "name": "order.routing-key",
+    "type": "java.lang.String",
+    "description": "A description for 'order.routing-key'"
+  }
+]}
